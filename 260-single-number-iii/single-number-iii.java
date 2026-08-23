@@ -1,17 +1,19 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        int[] ans = new int[2];
-        Set<Integer> hs = new HashSet<>();
-        for(int i=0;i<nums.length;i++){
-            if(hs.contains(nums[i])){
-                hs.remove(nums[i]);
+        int xor = 0;
+        for(int x : nums){
+            xor^=x;
+        }
+        int bit = xor & -xor;
+        int a = 0;
+        int b = 0;
+        for(int num : nums){
+            if((num&bit)!=0){
+                a^=num;
+            }else{
+                b^=num;
             }
-            else hs.add(nums[i]);
         }
-        int i=0;
-        for(int x : hs){
-            ans[i++]=x;
-        }
-        return ans;
+        return new int[]{a,b};
     }
 }
